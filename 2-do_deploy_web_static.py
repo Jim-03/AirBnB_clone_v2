@@ -5,6 +5,8 @@ import os
 
 
 env.hosts = ['52.3.246.175', '54.82.207.91']
+
+
 def do_deploy(archive_path):
     """Distributes the archive."""
     if not os.path.exists(archive_path):
@@ -24,5 +26,5 @@ def do_deploy(archive_path):
         run(f"sudo rm -rf /data/web_static/current")
         run(f"sudo ln -s {folder} /data/web_static/current")
         return True
-    except:
+    except Exception as e:
         return False

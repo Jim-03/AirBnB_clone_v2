@@ -1,6 +1,7 @@
 #!/usr/bi/python3
 """Creayes and distributes an archive to web servers."""
 from fabric.api import *
+from datetime import datetime
 import os
 
 
@@ -10,7 +11,7 @@ env.hosts = ['52.3.246.175', '54.82.207.91']
 def do_pack():
     """Generates the .tgz archive from web static."""
     local("sudo mkdir -p versions")
-    now =datetime.now().strftime("%Y%m%d%H%M%S")
+    now = datetime.now().strftime("%Y%m%d%H%M%S")
     name = f"versions/web_static_{now}.tgz"
     ans = local(f"sudo tar -cvzf {name} web_static")
 
@@ -18,6 +19,7 @@ def do_pack():
         return name
     else:
         return None
+
 
 def do_deploy(archive_path):
     """Distributes the archive."""
@@ -38,9 +40,10 @@ def do_deploy(archive_path):
         run(f"sudo rm -rf /data/web_static/current")
         run(f"sudo ln -s {folder} /data/web_static/current")
         return True
-    except:
+    except Exception as e:
         return False
-    
+
+
 def deploy():
     """ creates and distributes an archive to your web servers."""
     if not os.path.exists(do_pack()):
