@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Setes up web servers for deployment of web static
+# Sets up web servers for deployment of web static
 
 # Update packages
 sudo apt update
@@ -24,6 +24,9 @@ fake_html="
 echo "$fake_html" > /data/web_static/releases/test/index.html
 
 #Create symbolic link
+if [ -L /data/web_static/current ]; then
+    sudo rm /data/web_static/current
+fi
 sudo ln -sf /data/web_static/releases/test/ /data/web_static/current
 
 #Give recursive ownership to ubuntu user and group
