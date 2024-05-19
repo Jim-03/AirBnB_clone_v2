@@ -24,13 +24,13 @@ fake_html="
 echo "$fake_html" > /data/web_static/releases/test/index.html
 
 #Create symbolic link
-ln -sf /data/web_static/releases/test/ /data/web_static/current
+sudo ln -sf /data/web_static/releases/test/ /data/web_static/current
 
 #Give recursive ownership to ubuntu user and group
-chown -hr ubuntu:ubuntu /data/
+sudo chown -hR ubuntu:ubuntu /data/
 
 #update nginx server content
-sed -i '51 i \\n\tlocation /hbnb_static {\n\talias /data/web_static/current;\n\t}' /etc/nginx/sites-available/default
+sudo sed -i '51 i \\n\tlocation /hbnb_static {\n\talias /data/web_static/current;\n\t}' /etc/nginx/sites-available/default
 
 #Restart nginx
 sudo service nginx restart
